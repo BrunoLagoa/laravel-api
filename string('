@@ -1,0 +1,6 @@
+
+[37;41m                                                                  [39;49m
+[37;41m  [Symfony\Component\Console\Exception\CommandNotFoundException]  [39;49m
+[37;41m  There are no commands defined in the "Schema:" namespace.       [39;49m
+[37;41m                                                                  [39;49m
+
