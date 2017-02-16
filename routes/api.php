@@ -4,15 +4,21 @@ use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| api Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
+| Here is where you can register api routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| is assigned the "api" middleware group. Enjoy building your api!
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+//$this->resource('products', 'api\ProductController');
+Route::group(['prefix' => 'v1'], function () {
+    Route::post('products/search', 'api\V1\ProductController@search');
+    Route::resource('products', 'api\V1\ProductController', ['except' => ['create', 'edit']]);
 });
