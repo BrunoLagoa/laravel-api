@@ -44,14 +44,14 @@ class ProductController extends Controller
 
         if($validate->fails()){
             $messages = $validate->messages();
-            return response()->json(['validate.error', $messages]);
+            return response()->json(['validate.error', $messages], 422);
         }
 
         if(!$insert = $this->product->create($request->all())){
             return response()->json(['error' => 'erro_insert'], 500);
         }
 
-        return response()->json($insert);
+        return response()->json(['data' => $insert], 201);
     }
 
     /**
@@ -63,7 +63,7 @@ class ProductController extends Controller
     public function show($id)
     {
         if(!$product = $this->product->find($id)){
-            return response()->json(['error' => 'not_found']);
+            return response()->json(['error' => 'product_not_found'], 404);
         }
 
         return response()->json(['data' => $product]);
@@ -84,11 +84,11 @@ class ProductController extends Controller
 
         if($validate->fails()){
             $messages = $validate->messages();
-            return response()->json(['validate.error', $messages]);
+            return response()->json(['validate.error', $messages], 422);
         }
 
         if(!$product = $this->product->find($id)){
-            return response()->json(['error' => 'product_not_found']);
+            return response()->json(['error' => 'product_not_found'], 404);
         }
 
         if(!$update = $product->update($data)){
@@ -108,7 +108,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         if(!$product = $this->product->find($id)){
-            return response()->json(['error' => 'product_not_found']);
+            return response()->json(['error' => 'product_not_found'], 404);
         }
 
         if(! $delete = $product->delete()){
@@ -126,7 +126,7 @@ class ProductController extends Controller
 
         if($validate->fails()){
             $messages = $validate->messages();
-            return response()->json(['validate.error', $messages]);
+            return response()->json(['validate.error', $messages], 422);
         }
 
         $products = $this->product->serach($data,$this->totalPage);

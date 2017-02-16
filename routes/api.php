@@ -19,6 +19,13 @@ use Illuminate\Http\Request;
 
 //$this->resource('products', 'api\ProductController');
 Route::group(['prefix' => 'v1'], function () {
-    Route::post('products/search', 'api\V1\ProductController@search');
-    Route::resource('products', 'api\V1\ProductController', ['except' => ['create', 'edit']]);
+
+    Route::post('auth', 'Auth\AuthApiController@authenticate');
+    Route::post('auth-refresh', 'Auth\AuthApiController@refreshToken');
+
+    Route::group(['middleware' => 'jwt.auth'], function () {
+        Route::get('products/search', 'api\V1\ProductController@search');
+        Route::resource('products', 'api\V1\ProductController', ['except' => ['create', 'edit']]);
+    });
+
 });
